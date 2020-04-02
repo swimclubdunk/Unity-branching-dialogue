@@ -5,6 +5,10 @@ My attempt at elegantly solving the headache that is branching dialogue in Unity
 
 <p align="center">
   <img>
-  [![IMAGE ALT TEXT](http://img.youtube.com/vi/jMAN-cNCyBQ/0.jpg)](http://www.youtube.com/watch?v=jMAN-cNCyBQ "Demo")
+  <[![IMAGE ALT TEXT](http://img.youtube.com/vi/jMAN-cNCyBQ/0.jpg)](http://www.youtube.com/watch?v=jMAN-cNCyBQ "Demo")>
   <img />
+</p>
+
+<p align="center"> 
+<img src="...">
 </p>
