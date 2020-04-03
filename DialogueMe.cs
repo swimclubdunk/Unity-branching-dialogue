@@ -6,14 +6,17 @@ using TMPro;
 
 public class DialogueMe : MonoBehaviour
 {
+    [Header("Conversation Tracker")]
+    [SerializeField] int currentIndex = 0;
+
     [Header("Debug Monitor")]
     [SerializeField] bool playerInRange = false;
     [SerializeField] bool interactionTriggered = false;
     public bool ongoingDialogue = false;
     [SerializeField] bool allowContinuePress = false;
 
-    [Header("Gameplay Critical")]
-    [SerializeField] int currentIndex = 0;
+    [Header("Settings")]
+    [SerializeField] bool freezeMouseViewDuringDialogue = false;
 
     DialogueData data;
     GameObject player;
@@ -208,14 +211,6 @@ public class DialogueMe : MonoBehaviour
     void UpdateInteractionCode(int val)
     {
         currentIndex = val;
-
-        //if(dialogueData2.dialoguePackage[interactionCode].recycle && !dialogueData2.dialoguePackage[interactionCode].repliesAtEnd)
-        //{
-        //    return;
-        //}else if(!dialogueData2.dialoguePackage[interactionCode].recycle && !dialogueData2.dialoguePackage[interactionCode].repliesAtEnd)
-        //{
-        //    interactionCode = dialogueData2.dialoguePackage[interactionCode].ifNoRepliesNewInteractionCode;
-        //}
     }
 
     IEnumerator RenderLetters()
@@ -228,7 +223,7 @@ public class DialogueMe : MonoBehaviour
             bleepcounter += 1;
             if (bleepcounter == data.vocalisationFrequency)
             {
-                //SMscript.LetterBleep(pitchmin, pitchmax);
+                //audio for gibberish vocalisation goes here
                 bleepcounter = 0;
             }
             tmpText.text += c;
@@ -260,7 +255,9 @@ public class DialogueMe : MonoBehaviour
 
     void InitiateDialogue()
     {
-        player.GetComponent<Movement>().InDialogueCurrently(true);
+        if(freezeMouseViewDuringDialogue)
+            player.GetComponent<SimplerMovement>().InDialogueCurrently(true);
+
         tmpName.text = data.characterName;
         tmpText.text = "";
         defaultSprite = AcquireDefaultSprite();
@@ -305,7 +302,9 @@ public class DialogueMe : MonoBehaviour
             FadeOut();
             ongoingDialogue = false;
             interactionTriggered = false;
-            player.GetComponent<Movement>().InDialogueCurrently(false);
+            
+            if(freezeMouseViewDuringDialogue)
+                player.GetComponent<SimplerMovement>().InDialogueCurrently(false);
 
             if (data.dialoguePackage[currentIndex].circular && !data.dialoguePackage[currentIndex].repliesAtEnd)
             {
@@ -362,7 +361,9 @@ public class DialogueMe : MonoBehaviour
             interactionTriggered = false;
             StartCoroutine(CursorChange(false, 0f));
             FadeOut();
-            player.GetComponent<Movement>().InDialogueCurrently(false);
+
+            if(freezeMouseViewDuringDialogue)
+                player.GetComponent<SimplerMovement>().InDialogueCurrently(false);
         }
     }
 
@@ -482,11 +483,11 @@ public class DialogueMe : MonoBehaviour
     IEnumerator FadeCanvas(CanvasGroup cg, float from, float to, float duration, float delay)
     {
         yield return new WaitForSecondsRealtime(delay);
-        float elaspedTime = 0f;
-        while (elaspedTime <= duration)
+        float elapsedTime = 0f;
+        while (elapsedTime <= duration)
         {
-            elaspedTime += Time.deltaTime;
-            cg.alpha = Mathf.Lerp(from, to, elaspedTime / duration);
+            elapsedTime += Time.deltaTime;
+            cg.alpha = Mathf.Lerp(from, to, elapsedTime / duration);
             yield return null;
         }
         cg.alpha = to;
