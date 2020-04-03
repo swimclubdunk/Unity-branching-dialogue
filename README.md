@@ -5,8 +5,7 @@ Made in Unity 2019.3.0f6
 
 My attempt at elegantly solving the headache that is branching dialogue in Unity. Work in progress but already in a functional state. Now working on json importing to allow for external editing and better management of dialogue data.
 
-UnityPackage Download: 
-https://github.com/swimclubdunk/Unity-branching-dialogue/raw/master/simpleBranchingDialogue.unitypackage
+UnityPackage Download: https://git.io/JvFb0
 
 Implementation notes:
 - Player needs to be tagged 'Player'
