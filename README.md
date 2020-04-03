@@ -1,4 +1,4 @@
-# Unity-branching-dialogue
+# Unity branching dialogue
 A basic branching dialogue system for Unity (wip)
 
 Made in Unity 2019.3.0f6
